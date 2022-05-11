@@ -4,6 +4,8 @@ import { getPrismicClient } from '../services/prismic';
 
 import commonStyles from '../styles/common.module.scss';
 import styles from './home.module.scss';
+import { Head } from 'next/document';
+import Link from 'next/link';
 
 interface Post {
   uid?: string;
@@ -25,9 +27,29 @@ interface HomeProps {
 }
 
 export default function Home({ postsPagination }: HomeProps) {
-  // TODO
   console.log(postsPagination);
-  return <h1>Teste</h1>;
+
+  return (
+    <>
+      {/* <Head>Teste</Head> */}
+      <main>
+        <div>
+          {postsPagination.results.map(post => (
+            <Link href={`/post/${post.uid}`}>
+              <a key={post.uid}>
+                <strong>{post.data.title}</strong>
+                <p>{post.data.subtitle}</p>
+                <div>
+                  <time>{post.first_publication_date}</time>
+                  <p>{post.data.author}</p>
+                </div>
+              </a>
+            </Link>
+          ))}
+        </div>
+      </main>
+    </>
+  );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
