@@ -2,6 +2,7 @@
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { RichText } from 'prismic-dom';
 import { FiCalendar, FiClock, FiUser } from 'react-icons/fi';
@@ -37,6 +38,16 @@ interface PostProps {
 export default function Post({ post }: PostProps): JSX.Element {
   const router = useRouter();
 
+  const wordsCount = post.data.content.reduce((total, contentItem) => {
+    total += contentItem.heading.map(item => item.text.split(' ')).length;
+
+    const words = contentItem.body.map(item => item.text.split(' ').length);
+    words.map(word => (total += word));
+    return total;
+  }, 0);
+
+  const readingTime = Math.ceil(wordsCount / 200);
+
   if (router.isFallback) {
     return <h1>Carregando...</h1>;
   }
@@ -51,6 +62,9 @@ export default function Post({ post }: PostProps): JSX.Element {
 
   return (
     <>
+      <Head>
+        <title>{`${post.data.title} | spacetraveling`}</title>
+      </Head>
       <div className={styles.banner}>
         <img src={post.data.banner.url} alt="Banner" />
       </div>
@@ -67,7 +81,7 @@ export default function Post({ post }: PostProps): JSX.Element {
               {post.data.author}
             </p>
             <p>
-              <FiClock size={20} /> 4 min
+              <FiClock size={20} /> {readingTime} min
             </p>
           </div>
 
