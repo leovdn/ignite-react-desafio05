@@ -38,15 +38,15 @@ interface PostProps {
 export default function Post({ post }: PostProps): JSX.Element {
   const router = useRouter();
 
-  const wordsCount = post.data.content.reduce((total, contentItem) => {
-    total += contentItem.heading.map(item => item.text.split(' ')).length;
+  // const wordsCount = post.data.content.reduce((total, contentItem) => {
+  //   total += contentItem.heading.map(item => item.text.split(' ')).length;
 
-    const words = contentItem.body.map(item => item.text.split(' ').length);
-    words.map(word => (total += word));
-    return total;
-  }, 0);
+  //   const words = contentItem.body.map(item => item.text.split(' ').length);
+  //   words.map(word => (total += word));
+  //   return total;
+  // }, 0);
 
-  const readingTime = Math.ceil(wordsCount / 200);
+  // const readingTime = Math.ceil(wordsCount / 200);
 
   if (router.isFallback) {
     return <h1>Carregando...</h1>;
@@ -81,13 +81,12 @@ export default function Post({ post }: PostProps): JSX.Element {
               {post.data.author}
             </p>
             <p>
-              <FiClock size={20} /> {readingTime} min
+              <FiClock size={20} /> 4 min
             </p>
           </div>
 
-          {post.data.content.map(content => (
+          {/* {post.data.content.map(content => (
             <article key={content.heading} className={styles.postContent}>
-              {/* <h2>{content.heading.map(heading => heading.text)}</h2> */}
               <h2>{RichText.asHtml(content.heading)}</h2>
               <div
                 dangerouslySetInnerHTML={{
@@ -95,7 +94,20 @@ export default function Post({ post }: PostProps): JSX.Element {
                 }}
               />
             </article>
-          ))}
+          ))} */}
+          {post.data.content.map(content => {
+            return (
+              <article key={content.heading} className={styles.post}>
+                <h2>{content.heading}</h2>
+                <div
+                  className={styles.postContent}
+                  dangerouslySetInnerHTML={{
+                    __html: RichText.asHtml(content.body),
+                  }}
+                />
+              </article>
+            );
+          })}
         </div>
       </main>
     </>
