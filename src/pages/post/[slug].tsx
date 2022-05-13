@@ -87,7 +87,8 @@ export default function Post({ post }: PostProps): JSX.Element {
 
           {post.data.content.map(content => (
             <article key={content.heading} className={styles.postContent}>
-              <h2>{content.heading.map(heading => heading.text)}</h2>
+              {/* <h2>{content.heading.map(heading => heading.text)}</h2> */}
+              <h2>{RichText.asHtml(content.heading)}</h2>
               <div
                 dangerouslySetInnerHTML={{
                   __html: RichText.asHtml(content.body.map(body => body)),
