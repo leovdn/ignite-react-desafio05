@@ -18,18 +18,14 @@
     color: var(--heading);
     display: block;
     font-weight: bold;
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-top: 5rem;
-    line-height: 2rem;
+    line-height: 3rem;
     transition: color 200ms;
   }
 
-  &:hover a {
-    color: var(--highlight);
-  }
-
   .bottomInfo {
-    margin-top: 3rem;
+    margin-top: 1.6rem;
     display: flex;
     align-items: center;
     gap: 24px;
@@ -54,13 +50,17 @@
 }
 
 .postContent {
-  margin-top: 4rem;
-  line-height: 2rem;
+  line-height: 1.65rem;
   font-size: 1.125rem;
+  text-align: justify;
   color: var(--body);
 
+  a {
+    color: var(--highlight);
+  }
+
   h2 {
-    color: var(--heading);
+    margin: 4rem 0;
     display: block;
     font-weight: bold;
     font-size: 2rem;
@@ -68,15 +68,15 @@
   }
 
   p,
-  ul {
+  ul,
+  ol {
     margin: 1.5rem 0;
   }
 
-  ul {
-    padding: 1.5rem;
-
+  ul,
+  ol {
     li {
-      margin: 0.5rem 0;
+      margin: 1.5rem 0;
     }
   }
 }

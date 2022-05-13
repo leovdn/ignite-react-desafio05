@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { GetStaticPaths, GetStaticProps } from 'next';
@@ -54,7 +55,7 @@ export default function Post({ post }: PostProps): JSX.Element {
         <img src={post.data.banner.url} alt="Banner" />
       </div>
       <main className={styles.container}>
-        <article className={styles.post}>
+        <div className={styles.post}>
           <h1>{post.data.title}</h1>
           <div className={styles.bottomInfo}>
             <time>
@@ -71,17 +72,16 @@ export default function Post({ post }: PostProps): JSX.Element {
           </div>
 
           {post.data.content.map(content => (
-            <article key={content.heading} className={styles.post}>
+            <article key={content.heading} className={styles.postContent}>
               <h2>{content.heading.map(heading => heading.text)}</h2>
               <div
-                className={styles.postContent}
                 dangerouslySetInnerHTML={{
                   __html: RichText.asHtml(content.body.map(body => body)),
                 }}
               />
             </article>
           ))}
-        </article>
+        </div>
       </main>
     </>
   );
